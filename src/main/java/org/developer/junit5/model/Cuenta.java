@@ -1,5 +1,7 @@
 package org.developer.junit5.model;
 
+import org.developer.junit5.model.exceptions.DineroInsuficienteException;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -49,6 +51,20 @@ public class Cuenta {
             this.saldo = saldo;
       }
 
+      //metodo para debito
+      public void debito(BigDecimal monto){
+          BigDecimal nuevoSaldo = this.saldo.subtract(monto);
+          if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0){
+             throw  new DineroInsuficienteException("Dinero Insuficiente");
+          }
+
+      }
+
+      //metodo para credito
+      public void credito(BigDecimal monto){
+           this.saldo = this.saldo.add(monto);
+
+      }
 
 
 }
