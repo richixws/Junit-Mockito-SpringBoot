@@ -57,6 +57,7 @@ public class Cuenta {
           if (nuevoSaldo.compareTo(BigDecimal.ZERO) < 0){
              throw  new DineroInsuficienteException("Dinero Insuficiente");
           }
+          this.saldo=nuevoSaldo;
 
       }
 

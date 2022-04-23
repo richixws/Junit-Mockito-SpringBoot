@@ -59,12 +59,15 @@ class CuentaTest {
     }
 
     @Test
-    void
-            () {
+    void tetDineroInsuficienteException() {
         Cuenta cuenta = new Cuenta("Andres", new BigDecimal("1000.12345"));
-        assertThrows(DineroInsuficienteException.class, ()-> {
+        Exception exception= assertThrows(DineroInsuficienteException.class, ()-> {
             cuenta.debito(new BigDecimal(1500));
         });
+
+        String actual= exception.getMessage();
+        String esperado = "Dinero Insuficiente";
+        assertEquals(esperado,actual);
 
     }
 }
