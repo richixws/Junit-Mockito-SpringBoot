@@ -1,6 +1,6 @@
-package org.developer.junit5.model;
+package org.developer.junit5.ejemplo.models;
 
-import org.developer.junit5.model.exceptions.DineroInsuficienteException;
+import org.developer.junit5.ejemplo.exceptions.DineroInsuficienteException;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -9,8 +9,7 @@ public class Cuenta {
 
       private String persona;
       private BigDecimal saldo;
-
-
+      private Banco banco;
 
       public Cuenta(String persona, BigDecimal saldo) {
             this.persona = persona;
@@ -58,13 +57,11 @@ public class Cuenta {
              throw  new DineroInsuficienteException("Dinero Insuficiente");
           }
           this.saldo=nuevoSaldo;
-
       }
 
       //metodo para credito
       public void credito(BigDecimal monto){
            this.saldo = this.saldo.add(monto);
-
       }
 
 

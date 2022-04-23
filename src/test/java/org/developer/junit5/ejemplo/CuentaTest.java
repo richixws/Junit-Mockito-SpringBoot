@@ -1,6 +1,8 @@
-package org.developer.junit5.model;
+package org.developer.junit5.ejemplo;
 
-import org.developer.junit5.model.exceptions.DineroInsuficienteException;
+import org.developer.junit5.ejemplo.exceptions.DineroInsuficienteException;
+import org.developer.junit5.ejemplo.models.Banco;
+import org.developer.junit5.ejemplo.models.Cuenta;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -68,6 +70,49 @@ class CuentaTest {
         String actual= exception.getMessage();
         String esperado = "Dinero Insuficiente";
         assertEquals(esperado,actual);
+    }
+
+    @Test
+    void testTransferirDineroCuentas(){
+
+        Cuenta cuenta1= new Cuenta("Jhon Doe", new BigDecimal("2500"));
+        Cuenta cuenta2= new Cuenta("Andres", new BigDecimal("1500.8989"));
+
+        Banco banco= new Banco();
+        banco.setNombre("banco de la Nacion");
+        banco.transferir(cuenta2,cuenta1, new BigDecimal(500));
+
+        assertEquals("1000.8989", cuenta2.getSaldo().toPlainString());
+        assertEquals("3000",cuenta1.getSaldo().toPlainString());
 
     }
+    @Test
+    void testRelacionBancoCuentas(){
+
+        Cuenta cuenta1= new Cuenta("Jhon Doe", new BigDecimal("2500"));
+        Cuenta cuenta2= new Cuenta("Andres", new BigDecimal("1500.8989"));
+
+        Banco banco= new Banco();
+        banco.addCuenta(cuenta1);
+        banco.addCuenta(cuenta2);
+
+        banco.setNombre("bancos de la Nacion");
+        banco.transferir(cuenta2,cuenta1, new BigDecimal(500));
+
+        assertAll(()-> assertEquals("1000.8989",cuenta2.getSaldo().toPlainString()),
+                  ()-> assertEquals("3000",cuenta1.getSaldo().toPlainString()),
+                  ()-> assertEquals(2,banco.getCuentas().size()),
+                  () -> assertEquals("Andres", banco.getCuentas().stream()
+                          .filter(c -> c.getPersona().equals("Andres"))
+                          .findFirst()
+                          .get().getPersona()),
+                  () -> assertTrue(banco.getCuentas().stream().anyMatch( c-> c.getPersona().equals("Jhon Doe"))));
+
+        //);
+        //assertEquals("100.8989", cuenta2.getSaldo().toPlainString());
+        //assertEquals("300",cuenta1.getSaldo().toPlainString());
+       // assertEquals(2,banco.getCuentas().size());
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package org.developer.junit5.model.exceptions;
+package org.developer.junit5.ejemplo.exceptions;
 
 public class DineroInsuficienteException extends  RuntimeException{
 
